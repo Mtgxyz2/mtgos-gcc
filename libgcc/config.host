@@ -432,6 +432,10 @@ arm*-*-eabi* | arm*-*-symbianelf* | arm*-*-rtems*)
 	extra_parts="$extra_parts crtfastmath.o"
 	unwind_header=config/arm/unwind-arm.h
 	;;
+arm-*-mtgos*)
+    extra_parts="$extra_parts crti.o crtbegin.o crtend.o crtn.o"
+    tmake_file="$tmake_file t-crtstuff-pic t-libgcc-pic"
+    ;;
 avr-*-rtems*)
 	tmake_file="$tmake_file avr/t-avr avr/t-rtems t-fpbit"
 	tm_file="$tm_file avr/avr-lib.h"
@@ -755,6 +759,14 @@ x86_64-*-mingw*)
 		extra_parts="$extra_parts vtv_start.o vtv_end.o vtv_start_preinit.o vtv_end_preinit.o"
 	fi
 	;;
+i[34567]86-*-mtgos*)
+    extra_parts="$extra_parts ctri.o crtbegin.o crtend.o crtn.o"
+    tmake_file="$tmake_file i386/t-crtstuff t-crtstuff-pic t-libgcc-pic"
+    ;;
+x86_64-*-mtgos*)
+    extra_parts="$extra_parts crti.o crtbegin.o crtend.o crtn.o"
+    tmake_file="$tmake_file i386/t-crtstuff t-crtstuff-pic t-libgcc-pic"
+    ;;
 i[34567]86-*-interix[3-9]*)
 	tmake_file="$tmake_file i386/t-interix i386/t-chkstk"
 	;;
@@ -1100,6 +1112,10 @@ powerpcle-*-eabi*)
 	tmake_file="${tmake_file} rs6000/t-ppccomm rs6000/t-crtstuff t-crtstuff-pic t-fdpbit"
 	extra_parts="$extra_parts crtbegin.o crtend.o crtbeginS.o crtendS.o crtbeginT.o ecrti.o ecrtn.o ncrti.o ncrtn.o"
 	;;
+powerpc-*-mtgos*)
+    extra_parts="$extra_parts crti.o crtbegin.o crtend.o crtn.o"
+    tmake_file="$tmake_file rs6000/t-crtstuff t-crtstuff-pic t-libgcc-pic"
+    ;;
 rs6000-ibm-aix4.[3456789]* | powerpc-ibm-aix4.[3456789]*)
 	md_unwind_header=rs6000/aix-unwind.h
 	tmake_file="t-fdpbit rs6000/t-ppc64-fp rs6000/t-slibgcc-aix rs6000/t-ibm-ldouble"

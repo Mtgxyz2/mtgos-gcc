@@ -904,6 +904,11 @@ case ${target} in
     *) echo 'Unknown thread configuration for VxWorks'; exit 1 ;;
   esac
   ;;
+*-*-mtgos*)
+  gas=yes
+  gnu_ld=yes
+  default_use_cxa_atexit=yes
+  ;;
 *-*-elf|arc*-*-elf*)
   # Assume that newlib is being used and so __cxa_atexit is provided.
   default_use_cxa_atexit=yes
@@ -1140,6 +1145,9 @@ arm*-*-eabi* | arm*-*-symbianelf* | arm*-*-rtems*)
 	esac
 	tm_file="${tm_file} arm/aout.h vxworks-dummy.h arm/arm.h"
 	;;
+arm-*-mtgos*)
+    tm_file = "${tm_file} dbxelf.h elfos.h glibc-stdint.h arm/elf.h mtgos.h"
+    ;;
 avr-*-rtems*)
 	tm_file="elfos.h avr/elf.h avr/avr-arch.h avr/avr.h avr/specs.h dbxelf.h avr/rtems.h rtems.h newlib-stdint.h"
 	tm_defines="${tm_defines} WITH_RTEMS"
@@ -1807,6 +1815,12 @@ i[34567]86-*-interix[3-9]*)
 		tm_file="${tm_file} dbxcoff.h"
 	fi
 	;;
+i[34567]86-*-mtgos*)
+    tm_file="${tm_file} i386/unix.h i386/att.h dbxelf.h elfos.h glibc-stdint.h i386/i386elf.h mtgos.h"
+    ;;
+x86_64-*-mtgos*)
+    tm_file="${tm_file} i386/unix.h i386/att.h dbxelf.h elfos.h glibc-stdint.h i386/i386elf.h i386/x86_64.h mtgos.h"
+    ;;
 ia64*-*-elf*)
 	tm_file="${tm_file} dbxelf.h elfos.h newlib-stdint.h ia64/sysv4.h ia64/elf.h"
 	tmake_file="ia64/t-ia64"
@@ -2529,6 +2543,9 @@ powerpcle-*-eabi*)
 	extra_options="${extra_options} rs6000/sysv4.opt"
 	use_gcc_stdint=wrap
 	;;
+powerpc-*-mtgos*)
+    tm_file="${tm_file} rs6000/750cl.h dbxelf.h elfos.h glibc-stdint.h mtgos.h"
+    ;;
 rs6000-ibm-aix4.[3456789]* | powerpc-ibm-aix4.[3456789]*)
 	tm_file="rs6000/biarch64.h ${tm_file} rs6000/aix.h rs6000/aix43.h rs6000/xcoff.h rs6000/aix-stdint.h"
 	tmake_file="rs6000/t-aix43 t-slibgcc"
